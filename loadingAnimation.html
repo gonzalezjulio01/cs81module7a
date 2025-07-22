@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Loading Animation Simulator</title>
+</head>
+<body style="font-family: monospace; text-align: center; padding-top: 100px; background-color: #f4f4f4;">
+
+  <div id="loader" style="font-size: 2rem; margin-bottom: 20px;">Loading...</div>
+  <div id="status">Please wait</div>
+
+  <script>
+    // This function starts the loading animation
+    function runLoadingAnimation() {
+      // Get the loader emoji area
+      const loader = document.getElementById("loader");
+
+      // Get the text status area
+      const status = document.getElementById("status");
+
+      // These are the different frames that will show one after another
+      const frames = ["⏳", "⌛", ".", "..", "..."];
+
+      // Keeps track of which frame we're on
+      let index = 0;
+
+      // Counts how many full cycles have happened
+      let cycleCount = 0;
+
+      // The animation will stop after 10 full cycles
+      const maxCycles = 10;
+
+      // This interval runs every 500ms (half a second)
+      const interval = setInterval(() => {
+        // Update the loader with the current frame
+        loader.textContent = frames[index % frames.length];
+
+        // Move to the next frame
+        index++;
+
+        // If we completed one full cycle of the frames
+        if (index % frames.length === 0) {
+          cycleCount++;
+
+          // ✨ Extra feature: change background every cycle
+          if (cycleCount % 2 === 0) {
+            document.body.style.backgroundColor = "#e0f7fa"; // light blue
+          } else {
+            document.body.style.backgroundColor = "#f4f4f4"; // original
+          }
+        }
+
+        // When we've hit the max number of cycles, stop the loop
+        if (cycleCount >= maxCycles) {
+          clearInterval(interval); // ⛔ stop the interval from looping
+
+          // Show a checkmark and "Done!" text
+          loader.textContent = "✅";
+          status.textContent = "Done! 🎉 You made it!";
+
+          // 💡 Creative feature: Show confetti celebration
+          document.body.style.backgroundColor = "#d4edda"; // light green background
+          const confetti = document.createElement("div");
+          confetti.textContent = "🎉🎉🎉🎉🎉";
+          confetti.style.fontSize = "3rem";
+          confetti.style.marginTop = "20px";
+          document.body.appendChild(confetti);
+        }
+      }, 500); // Run the function every 500 milliseconds (half a second)
+    }
+
+    // Call the function so the animation starts automatically
+    runLoadingAnimation();
+  </script>
+
+</body>
+</html>
